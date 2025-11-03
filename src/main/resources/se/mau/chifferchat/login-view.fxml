@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<?import java.net.URL?>
+<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/25"
+      fx:controller="se.mau.chifferchat.ui.LoginController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
+    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="417.0" styleClass="app-title"
+           text="ChifferChat" textOverrun="CLIP">
+    </Label>
+
+    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="165.0" styleClass="h2"
+           text="Welcome!" textAlignment="CENTER" textOverrun="CLIP">
+    </Label>
+
+    <TextField fx:id="username" prefHeight="26.0" prefWidth="562.0" promptText="Username"
+               style="-fx-max-width: 300px;"/>
+    <PasswordField fx:id="password" promptText="Password" style="-fx-max-width: 300px;"/>
+
+    <Label fx:id="welcomeText" textFill="#c20005" underline="true"/>
+
+    <Button onAction="#onLoginClick" prefHeight="40.0" prefWidth="176.0" text="Log in" styleClass="btn-primary"/>
+
+    <stylesheets>
+        <URL value="@styles.css"/>
+    </stylesheets>
+</VBox>

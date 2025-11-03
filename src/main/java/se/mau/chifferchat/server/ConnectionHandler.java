@@ -25,39 +25,20 @@ public class ConnectionHandler implements Runnable {
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
             out = new PrintWriter(client.getOutputStream(), true);
 
-            out.println("Welcome!");
-            out.println("Please enter a nickname: ");
-            String nickName = in.readLine();
-            System.out.println(nickName + " connected");
-            server.broadcastMessage(nickName + " joined the chat!", this);
-            out.println("Write \"/help\" to see the list of commands!");
+            String userName = in.readLine();
+
+            out.println("Welcome " + userName + "!");
+            System.out.println(userName + " connected");
+            server.broadcastMessage(userName + " joined the chat!", this);
             String message;
 
             while ((message = in.readLine()) != null) {
-                if (message.equals("help")) {
-                    out.println(" \n Commands");
-                    out.println("--------------------");
-                    out.println(
-                            "/nick - Change your nickname by writing /nick \"space\" and your new nickname.\n" +
-                                    "/quit - Leave the chat"
-                    );
-                } else if (message.startsWith("/nick")) {
-                    String[] messageParts = message.split(" ", 2);
-                    if (messageParts.length == 2) {
-                        server.broadcastMessage(nickName + " renamed themselves to " + messageParts[1] + "!", this);
-                        System.out.println(nickName + " renamed themselves to " + messageParts[1] + "!");
-                        nickName = messageParts[1];
-                        out.println("Successfully changed nickname to: " + nickName + "!");
-                    } else {
-                        out.println("No nickname provided!");
-                    }
-                } else if (message.startsWith("/quit")) {
-                    server.broadcastMessage(nickName + " left the chat!", this);
-                    System.out.println(nickName + " left the chat!");
-
+                if (message.startsWith("/quit")) {
+                    server.broadcastMessage(userName + " left the chat!", this);
+                    System.out.println(userName + " left the chat!");
                     shutdown();
                 } else {
-                    server.broadcastMessage(nickName + ": " + message, this);
+                    server.broadcastMessage(userName + ": " + message, this);
                 }
 
             }

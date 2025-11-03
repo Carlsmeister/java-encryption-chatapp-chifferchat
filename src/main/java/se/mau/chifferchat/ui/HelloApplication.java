@@ -1,19 +1,31 @@
 package se.mau.chifferchat.ui;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import se.mau.chifferchat.client.Client;
 
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+
+    private static Client client;
+
+    public static Client getClient() {
+        return client;
+    }
+
+    public static void resetClient() {
+        client = new Client();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/se/mau/chifferchat/hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+        client = new Client();
+        SceneManager.setStage(stage);
+        SceneManager.switchScene("/se/mau/chifferchat/login-view.fxml", "ChifferChat – Login");
     }
 }

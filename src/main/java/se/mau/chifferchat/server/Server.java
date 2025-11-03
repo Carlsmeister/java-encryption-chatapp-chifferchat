@@ -49,7 +49,7 @@ public class Server implements Runnable {
         }
     }
 
-    public void broadcastMessage(String message, ConnectionHandler sender) {
+    public synchronized void broadcastMessage(String message, ConnectionHandler sender) {
         for (ConnectionHandler client : connections) {
             if (client != sender && client != null) {
                 client.sendMessage(message);
