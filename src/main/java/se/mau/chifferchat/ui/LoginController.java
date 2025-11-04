@@ -4,10 +4,11 @@ import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import org.kordamp.ikonli.javafx.FontIcon;
 import se.mau.chifferchat.client.Client;
 
@@ -27,7 +28,9 @@ public class LoginController {
     @FXML
     public PasswordField password;
     @FXML
-    public ListView<String> newsList;
+    public ScrollPane newsScrollPane;
+    @FXML
+    public VBox newsContainer;
     @FXML
     public HBox githubLinkBox;
     private Client client;
@@ -35,6 +38,8 @@ public class LoginController {
     @FXML
     public void initialize() {
         this.client = HelloApplication.getClient();
+
+
         loadNews();
 
         FontIcon githubIcon = new FontIcon("fab-github");
@@ -60,10 +65,17 @@ public class LoginController {
             newsItems.add("• Unable to load news");
         }
 
-        // Reverse to show newest first (assuming file has oldest first)
+        // Reverse to show newest first
         Collections.reverse(newsItems);
 
-        newsList.getItems().addAll(newsItems);
+        // Add each news item as a wrapped Label to VBox
+        for (String item : newsItems) {
+            Label newsLabel = new Label(item);
+            newsLabel.setWrapText(true);
+            newsLabel.setMaxWidth(210); // Fits within sidebar with padding
+            newsLabel.getStyleClass().add("news-item");
+            newsContainer.getChildren().add(newsLabel);
+        }
     }
 
     @FXML

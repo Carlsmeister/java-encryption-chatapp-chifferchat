@@ -17,7 +17,9 @@
 
         <Separator maxWidth="150"/>
 
-        <ListView fx:id="newsList" maxWidth="300.0"/>
+        <ScrollPane fx:id="newsScrollPane" fitToWidth="true" styleClass="news-scroll" VBox.vgrow="ALWAYS">
+            <VBox fx:id="newsContainer" spacing="8" styleClass="news-container"/>
+        </ScrollPane>
     </VBox>
     <VBox alignment="CENTER" HBox.hgrow="NEVER">
         <Separator maxHeight="500" minHeight="250" orientation="VERTICAL"/>
