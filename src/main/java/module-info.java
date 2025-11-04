@@ -3,6 +3,7 @@ module se.mau.chifferchat {
     requires javafx.fxml;
     requires javafx.graphics;
     requires org.kordamp.bootstrapfx.core;
+    requires org.kordamp.ikonli.javafx;
 
 
     exports se.mau.chifferchat.ui;

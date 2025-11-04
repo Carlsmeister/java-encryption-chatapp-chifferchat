@@ -2,30 +2,73 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <?import java.net.URL?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/25"
-      fx:controller="se.mau.chifferchat.ui.LoginController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="417.0" styleClass="app-title"
-           text="ChifferChat" textOverrun="CLIP">
-    </Label>
+<HBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/25" fx:controller="se.mau.chifferchat.ui.LoginController">
+    <!-- Left Sidebar: News Section -->
+    <VBox alignment="CENTER" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" spacing="15.0">
+        <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        </padding>
 
-    <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="79.0" prefWidth="165.0" styleClass="h2"
-           text="Welcome!" textAlignment="CENTER" textOverrun="CLIP">
-    </Label>
+        <Label styleClass="news-title" text="What's New!"/>
 
-    <TextField fx:id="username" prefHeight="26.0" prefWidth="562.0" promptText="Username"
-               style="-fx-max-width: 300px;"/>
-    <PasswordField fx:id="password" promptText="Password" style="-fx-max-width: 300px;"/>
+        <Separator maxWidth="150"/>
 
-    <Label fx:id="welcomeText" textFill="#c20005" underline="true"/>
+        <ListView fx:id="newsList" maxWidth="300.0"/>
+    </VBox>
+    <VBox alignment="CENTER" HBox.hgrow="NEVER">
+        <Separator maxHeight="500" minHeight="250" orientation="VERTICAL"/>
+    </VBox>
 
-    <Button onAction="#onLoginClick" prefHeight="40.0" prefWidth="176.0" text="Log in" styleClass="btn-primary"/>
+    <!-- Right Side: Login Form -->
+    <VBox alignment="TOP_CENTER" spacing="20.0" HBox.hgrow="ALWAYS">
+        <padding>
+            <Insets bottom="10.0" left="40.0" right="40.0" top="40.0"/>
+        </padding>
 
-    <stylesheets>
-        <URL value="@styles.css"/>
-    </stylesheets>
-</VBox>
+        <!-- Header Section -->
+        <VBox alignment="CENTER" spacing="10.0">
+            <Label styleClass="app-title" text="ChifferChat">
+                <font>
+                    <Font name="System Bold" size="32.0"/>
+                </font>
+            </Label>
+            <Label styleClass="h2" text="Welcome!">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+            </Label>
+        </VBox>
+
+        <!-- Spacer to push form to vertical center -->
+        <Region VBox.vgrow="SOMETIMES"/>
+
+        <!-- Login Form -->
+        <VBox alignment="CENTER" maxWidth="300.0" spacing="15.0">
+            <TextField fx:id="username" prefHeight="35.0" promptText="Username"/>
+            <PasswordField fx:id="password" prefHeight="35.0" promptText="Password"/>
+            <Label fx:id="welcomeText" textFill="#c20005"/>
+            <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="Infinity" onAction="#onLoginClick"
+                    prefHeight="40.0" styleClass="btn-primary" text="Log in"/>
+        </VBox>
+
+        <!-- Spacer to balance the layout -->
+        <Region VBox.vgrow="SOMETIMES"/>
+        <HBox alignment="CENTER" prefHeight="50.0" spacing="10.0">
+            <VBox alignment="CENTER" spacing="5.0">
+                <Label text="© Designed by Carlsmeister" textFill="#ff8c00"/>
+                <HBox fx:id="githubLinkBox" alignment="CENTER" maxWidth="100.0" onMouseClicked="#onGithubClick"
+                      spacing="8.0" styleClass="github-link">
+                    <Label styleClass="github-text" text="GitHub" textFill="DARKORANGE"/>
+                </HBox>
+            </VBox>
+        </HBox>
+
+        <stylesheets>
+            <URL value="@styles.css"/>
+        </stylesheets>
+    </VBox>
+</HBox>

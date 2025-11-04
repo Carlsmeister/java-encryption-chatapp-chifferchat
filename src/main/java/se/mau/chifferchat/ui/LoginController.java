@@ -1,13 +1,23 @@
 package se.mau.chifferchat.ui;
 
+import javafx.application.HostServices;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import org.kordamp.ikonli.javafx.FontIcon;
 import se.mau.chifferchat.client.Client;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class LoginController {
     @FXML
@@ -16,11 +26,44 @@ public class LoginController {
     public TextField username;
     @FXML
     public PasswordField password;
+    @FXML
+    public ListView<String> newsList;
+    @FXML
+    public HBox githubLinkBox;
     private Client client;
 
     @FXML
     public void initialize() {
         this.client = HelloApplication.getClient();
+        loadNews();
+
+        FontIcon githubIcon = new FontIcon("fab-github");
+        githubIcon.setIconSize(20);
+        githubIcon.setIconColor(javafx.scene.paint.Color.DARKORANGE);
+        githubLinkBox.getChildren().add(0, githubIcon);
+    }
+
+    private void loadNews() {
+        List<String> newsItems = new ArrayList<>();
+
+        try (InputStream is = getClass().getResourceAsStream("/news.txt")) {
+            if (is != null) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    if (!line.trim().isEmpty()) {
+                        newsItems.add("• " + line.trim());
+                    }
+                }
+            }
+        } catch (IOException e) {
+            newsItems.add("• Unable to load news");
+        }
+
+        // Reverse to show newest first (assuming file has oldest first)
+        Collections.reverse(newsItems);
+
+        newsList.getItems().addAll(newsItems);
     }
 
     @FXML
@@ -42,6 +85,18 @@ public class LoginController {
             }
         } else {
             welcomeText.setText("Incorrect username or password. Try again");
+        }
+    }
+
+    @FXML
+    public void onGithubClick() {
+        try {
+            HostServices hostServices = HelloApplication.getAppHostServices();
+            if (hostServices != null) {
+                hostServices.showDocument("https://github.com/Carlsmeister");
+            }
+        } catch (Exception e) {
+            System.err.println("Failed to open GitHub link: " + e.getMessage());
         }
     }
 }

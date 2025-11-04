@@ -13,6 +13,30 @@
     -fx-text-fill: #ff8c00;
 }
 
+.news-title {
+    -fx-text-fill: #ff8c00;
+    -fx-font-size: 34px;
+}
+
+#newsList {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+}
+
+#newsList .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5 10 5 10;
+}
+
+#newsList .list-cell:hover {
+    -fx-background-color: rgba(255, 140, 0, 0.2);
+}
+
+#newsList .list-cell:selected {
+    -fx-background-color: rgba(255, 140, 0, 0.3);
+}
+
 /* Headings */
 .label.h1 {
     -fx-font-size: 46px;
@@ -22,6 +46,12 @@
 
 .label.h2 {
     -fx-font-size: 34px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #ffffff;
+}
+
+.label.h3 {
+    -fx-font-size: 24px;
     -fx-font-weight: 600;
     -fx-text-fill: #ffffff;
 }
@@ -39,6 +69,7 @@
 /* Base button look */
 .button {
     -fx-background-radius: 10;
+    -fx-background-insets: 2;
     -fx-border-radius: 8;
     -fx-border-width: 2;
     -fx-border-color: #000000;
@@ -240,6 +271,36 @@
 }
 
 .button.btn-primary:hover {
-    -fx-background-color: #ffa733;
+    -fx-background-color: #ff8c00;
 }
 
+.separator .line {
+    -fx-background-color: #ff8c00;
+    -fx-border-width: 0;
+}
+
+.separator:vertical .line {
+    -fx-background-color: #ff8c00;
+    -fx-border-width: 0;
+}
+
+/* GitHub link styling */
+.github-link {
+    -fx-cursor: hand;
+    -fx-padding: 5 10 5 10;
+    -fx-background-radius: 5;
+}
+
+.github-link:hover {
+    -fx-background-color: rgba(255, 140, 0, 0.2);
+}
+
+.github-icon {
+    -fx-font-family: "Font Awesome 5 Brands";
+    -fx-font-size: 16;
+}
+
+.github-text {
+    -fx-font-weight: bold;
+    -fx-font-size: 14;
+}
