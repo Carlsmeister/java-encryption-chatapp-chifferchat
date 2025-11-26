@@ -1,2 +1,4 @@
 
+
+ Implement public key exchange and end-to-end encryption (2025-11-07)
  Added news feed, GitHub link, and UI enhancements (2025-11-04)

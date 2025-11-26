@@ -9,7 +9,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import org.kordamp.ikonli.javafx.FontIcon;
 import se.mau.chifferchat.client.Client;
 
 import java.io.BufferedReader;
@@ -44,10 +43,10 @@ public class LoginController {
 
         loadNews();
 
-        FontIcon githubIcon = new FontIcon("fab-github");
-        githubIcon.setIconSize(20);
-        githubIcon.setIconColor(javafx.scene.paint.Color.DARKORANGE);
-        githubLinkBox.getChildren().add(0, githubIcon);
+//        FontIcon githubIcon = new FontIcon("fab-github");
+//        githubIcon.setIconSize(20);
+//        githubIcon.setIconColor(javafx.scene.paint.Color.DARKORANGE);
+//        githubLinkBox.getChildren().add(0, githubIcon);
     }
 
     private void loadNews() {

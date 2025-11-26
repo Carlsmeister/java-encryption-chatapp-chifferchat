@@ -6,6 +6,7 @@
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
 <HBox xmlns:fx="http://javafx.com/fxml/1" prefHeight="600.0" prefWidth="800.0" stylesheets="@styles.css"
+      styleClass="login-view"
       xmlns="http://javafx.com/javafx/25" fx:controller="se.mau.chifferchat.ui.LoginController">
     <!-- Left Sidebar: News Section -->
     <VBox alignment="CENTER" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" spacing="15.0">
@@ -54,7 +55,7 @@
             <PasswordField fx:id="password" prefHeight="35.0" promptText="Password"/>
             <Label fx:id="welcomeText" textFill="#c20005"/>
             <Button alignment="CENTER" contentDisplay="CENTER" maxWidth="Infinity" onAction="#onLoginClick"
-                    prefHeight="40.0" styleClass="btn-primary" text="Log in"/>
+                    prefHeight="40.0" styleClass="loginButton" text="Log in"/>
         </VBox>
 
         <!-- Spacer to balance the layout -->
