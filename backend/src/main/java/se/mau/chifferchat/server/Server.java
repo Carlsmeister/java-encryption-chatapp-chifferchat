@@ -26,7 +26,7 @@ public class Server implements Runnable {
         connections = new ArrayList<>();
     }
 
-    public static void main(String[] args) {
+    static void main(String[] args) {
         Server server = new Server();
         Thread serverThread = new Thread(server);
         serverThread.start();
