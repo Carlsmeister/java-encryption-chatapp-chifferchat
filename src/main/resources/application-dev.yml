@@ -1,0 +1,44 @@
+# Development Profile Configuration
+spring:
+  # H2 In-Memory Database
+  datasource:
+    url: jdbc:h2:mem:chifferchat
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 123
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # Flyway
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
+  # DevTools
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+
+# CORS - Allow all origins in development
+cors:
+  allowed-origins: http://localhost:3000,http://localhost:5173
+
+# Logging - More verbose in development
+logging:
+  level:
+    root: INFO
+    se.mau.chifferchat: DEBUG
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+# JWT - Less secure secret OK for development
+jwt:
+  secret: dev-secret-key-for-local-development-only-not-for-production-use
