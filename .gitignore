@@ -179,6 +179,8 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+.env
+.env.*
 
 # Eclipse m2e generated files
 # Eclipse Core
@@ -246,4 +248,3 @@ docker-compose.override.yml
 .env
 .env.local
 .env.*.local
-

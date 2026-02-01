@@ -39,6 +39,6 @@ logging:
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
 
-# JWT - Less secure secret OK for development
+# JWT - Load from environment or .env
 jwt:
-  secret: dev-secret-key-for-local-development-only-not-for-production-use
+  secret: ${JWT_SECRET}
