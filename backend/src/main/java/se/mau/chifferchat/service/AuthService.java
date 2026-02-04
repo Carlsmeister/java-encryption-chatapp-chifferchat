@@ -92,6 +92,26 @@ public class AuthService {
         return new AuthTokens(accessToken, newRefreshToken);
     }
 
+    /**
+     * Get the user associated with a refresh token without invalidating it.
+     * This should be called BEFORE refreshToken() to retrieve user info.
+     *
+     * @param refreshToken The refresh token UUID
+     * @return The user associated with the token
+     * @throws UnauthorizedException if token not found or expired
+     */
+    @Transactional(readOnly = true)
+    public User getUserFromRefreshToken(UUID refreshToken) {
+        RefreshToken storedToken = refreshTokenRepository.findByToken(refreshToken)
+                .orElseThrow(() -> new UnauthorizedException("Refresh token not found"));
+
+        if (storedToken.getExpiryDate().isBefore(LocalDateTime.now())) {
+            throw new UnauthorizedException("Refresh token expired");
+        }
+
+        return storedToken.getUser();
+    }
+
     @Transactional
     public void logout(Long userId) {
         refreshTokenRepository.deleteByUserId(userId);
