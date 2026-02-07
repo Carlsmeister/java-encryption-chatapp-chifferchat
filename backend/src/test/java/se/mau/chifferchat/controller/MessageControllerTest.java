@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import se.mau.chifferchat.exception.ForbiddenException;
 import se.mau.chifferchat.exception.ResourceNotFoundException;
@@ -18,6 +19,8 @@ import se.mau.chifferchat.model.Group;
 import se.mau.chifferchat.model.Message;
 import se.mau.chifferchat.model.MessageType;
 import se.mau.chifferchat.model.User;
+import se.mau.chifferchat.security.JwtTokenProvider;
+import se.mau.chifferchat.security.UserDetailsServiceImpl;
 import se.mau.chifferchat.service.MessageService;
 import se.mau.chifferchat.service.UserService;
 
@@ -39,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(MessageController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles("test")
 class MessageControllerTest {
 
     @Autowired
@@ -46,6 +50,12 @@ class MessageControllerTest {
 
     @MockBean
     private MessageService messageService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @MockBean
     private UserService userService;

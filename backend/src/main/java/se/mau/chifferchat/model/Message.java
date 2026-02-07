@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
         indexes = {
                 @Index(name = "idx_messages_recipient", columnList = "recipient_id"),
                 @Index(name = "idx_messages_group", columnList = "group_id"),
-                @Index(name = "idx_messages_timestamp", columnList = "timestamp")
+                @Index(name = "idx_messages_timestamp", columnList = "timestamp"),
+                @Index(name = "idx_messages_delivery_status", columnList = "recipient_id, delivery_status, timestamp")
         }
 )
 @Data
@@ -54,8 +55,16 @@ public class Message {
     @Column(nullable = false, length = 20)
     private MessageType messageType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    @Builder.Default
+    private DeliveryStatus deliveryStatus = DeliveryStatus.SENDING;
+
     @Column(nullable = false)
     private LocalDateTime timestamp;
+
+    @Column
+    private LocalDateTime deliveredAt;
 
     @PrePersist
     protected void onCreate() {

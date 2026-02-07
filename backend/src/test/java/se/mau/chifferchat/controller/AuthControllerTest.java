@@ -7,11 +7,14 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import se.mau.chifferchat.exception.BadRequestException;
 import se.mau.chifferchat.exception.ResourceNotFoundException;
 import se.mau.chifferchat.exception.UnauthorizedException;
 import se.mau.chifferchat.model.User;
+import se.mau.chifferchat.security.JwtTokenProvider;
+import se.mau.chifferchat.security.UserDetailsServiceImpl;
 import se.mau.chifferchat.service.AuthService;
 import se.mau.chifferchat.service.AuthTokens;
 import se.mau.chifferchat.service.UserService;
@@ -31,6 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 @WebMvcTest(AuthController.class)
 @AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles("test")
 class AuthControllerTest {
 
     @Autowired
@@ -41,6 +45,12 @@ class AuthControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private JwtTokenProvider jwtTokenProvider;
+
+    @MockBean
+    private UserDetailsServiceImpl userDetailsService;
 
     @Test
     @DisplayName("Should register user successfully")

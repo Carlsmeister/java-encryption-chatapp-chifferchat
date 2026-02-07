@@ -30,6 +30,19 @@ jwt:
   secret: ${JWT_SECRET}
   access-token-expiration: 900000    # 15 minutes
   refresh-token-expiration: 604800000 # 7 days
+
+# ChifferChat Configuration
+chifferchat:
+  # Message delivery and cleanup settings
+  messages:
+    retention-days: 60                 # How long to keep delivered messages
+    cleanup-schedule: "0 0 2 * * *"    # Daily cleanup at 2 AM
+
+  # WebSocket connection settings
+  websocket:
+    reconnect-max-attempts: 10         # Max client reconnection attempts
+    reconnect-max-delay: 30            # Max delay between retries (seconds)
+
 # Logging
 logging:
   level:

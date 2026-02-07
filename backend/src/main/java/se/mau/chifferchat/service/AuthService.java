@@ -52,7 +52,7 @@ public class AuthService {
         User savedUser = userRepository.save(user);
         cryptoService.cachePublicKey(savedUser.getUsername(), savedUser.getPublicKeyPem());
 
-        String accessToken = jwtTokenProvider.generateAccessToken(savedUser.getUsername());
+        String accessToken = jwtTokenProvider.generateAccessToken(savedUser.getUsername(), savedUser.getId());
         String refreshToken = createRefreshToken(savedUser).getToken().toString();
 
         return new AuthTokens(accessToken, refreshToken);
@@ -67,7 +67,7 @@ public class AuthService {
             throw new UnauthorizedException("Invalid credentials");
         }
 
-        String accessToken = jwtTokenProvider.generateAccessToken(user.getUsername());
+        String accessToken = jwtTokenProvider.generateAccessToken(user.getUsername(), user.getId());
         String refreshToken = createRefreshToken(user).getToken().toString();
 
         return new AuthTokens(accessToken, refreshToken);
@@ -86,7 +86,7 @@ public class AuthService {
         User user = storedToken.getUser();
         refreshTokenRepository.delete(storedToken);
 
-        String accessToken = jwtTokenProvider.generateAccessToken(user.getUsername());
+        String accessToken = jwtTokenProvider.generateAccessToken(user.getUsername(), user.getId());
         String newRefreshToken = createRefreshToken(user).getToken().toString();
 
         return new AuthTokens(accessToken, newRefreshToken);

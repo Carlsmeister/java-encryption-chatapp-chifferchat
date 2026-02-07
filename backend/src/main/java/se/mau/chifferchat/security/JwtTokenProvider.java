@@ -47,12 +47,21 @@ public class JwtTokenProvider {
         this.signingKey = Keys.hmacShaKeyFor(keyBytes);
     }
 
+    public String generateAccessToken(String username, Long userId) {
+        return buildToken(username, userId, accessTokenExpiration);
+    }
+
+    public String generateRefreshToken(String username, Long userId) {
+        return buildToken(username, userId, refreshTokenExpiration);
+    }
+
+    // Deprecated: Keep for backward compatibility
     public String generateAccessToken(String username) {
-        return buildToken(username, accessTokenExpiration);
+        return buildToken(username, null, accessTokenExpiration);
     }
 
     public String generateRefreshToken(String username) {
-        return buildToken(username, refreshTokenExpiration);
+        return buildToken(username, null, refreshTokenExpiration);
     }
 
     public String getUsernameFromToken(String token) {
@@ -62,6 +71,15 @@ public class JwtTokenProvider {
                 .parseSignedClaims(token)
                 .getPayload()
                 .getSubject();
+    }
+
+    public Long getUserIdFromToken(String token) {
+        return Jwts.parser()
+                .verifyWith(signingKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("userId", Long.class);
     }
 
     public boolean validateToken(String token) {
@@ -76,15 +94,20 @@ public class JwtTokenProvider {
         }
     }
 
-    private String buildToken(String username, long expirationMillis) {
+    private String buildToken(String username, Long userId, long expirationMillis) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMillis);
 
-        return Jwts.builder()
+        var builder = Jwts.builder()
                 .subject(username)
                 .issuedAt(now)
-                .expiration(expiryDate)
-                .signWith(signingKey, SignatureAlgorithm.HS512)
+                .expiration(expiryDate);
+
+        if (userId != null) {
+            builder.claim("userId", userId);
+        }
+
+        return builder.signWith(signingKey, SignatureAlgorithm.HS512)
                 .compact();
     }
 }

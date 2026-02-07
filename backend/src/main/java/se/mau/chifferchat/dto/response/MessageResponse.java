@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import se.mau.chifferchat.model.DeliveryStatus;
 import se.mau.chifferchat.model.Message;
 
 import java.time.LocalDateTime;
@@ -26,6 +27,8 @@ public class MessageResponse {
     private String iv;
     private String messageType;
     private LocalDateTime timestamp;
+    private DeliveryStatus deliveryStatus;
+    private LocalDateTime deliveredAt;
 
     public static MessageResponse from(Message message) {
         return MessageResponse.builder()
@@ -38,6 +41,8 @@ public class MessageResponse {
                 .iv(message.getIv())
                 .messageType(message.getMessageType().name())
                 .timestamp(message.getTimestamp())
+                .deliveryStatus(message.getDeliveryStatus())
+                .deliveredAt(message.getDeliveredAt())
                 .build();
     }
 }

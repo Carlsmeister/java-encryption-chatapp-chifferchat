@@ -1,0 +1,33 @@
+# Test Profile Configuration
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+  flyway:
+    enabled: false  # Skip migrations in unit tests
+
+# JWT Test Configuration
+# Base64 encoded test secret (must be >= 64 bytes for HS512)
+jwt:
+  secret: dGVzdC1zZWNyZXQtZm9yLWp3dC1zaWduaW5nLW11c3QtYmUtYXQtbGVhc3Qtc2l4dHktZm91ci1ieXRlcy1mb3ItaHM1MTItYWxnb3JpdGht
+  access-token-expiration: 900000      # 15 minutes
+  refresh-token-expiration: 604800000  # 7 days
+
+# CORS test configuration
+cors:
+  allowed-origins: http://localhost:3000
+
+# Minimal logging in tests
+logging:
+  level:
+    root: ERROR
+    se.mau.chifferchat: WARN
+

@@ -8,15 +8,14 @@ import org.springframework.transaction.annotation.Transactional;
 import se.mau.chifferchat.exception.BadRequestException;
 import se.mau.chifferchat.exception.ResourceNotFoundException;
 import se.mau.chifferchat.exception.UnauthorizedException;
-import se.mau.chifferchat.model.Group;
-import se.mau.chifferchat.model.Message;
-import se.mau.chifferchat.model.MessageType;
-import se.mau.chifferchat.model.User;
+import se.mau.chifferchat.model.*;
 import se.mau.chifferchat.repository.GroupMembershipRepository;
 import se.mau.chifferchat.repository.GroupRepository;
 import se.mau.chifferchat.repository.MessageRepository;
 import se.mau.chifferchat.repository.UserRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -93,5 +92,51 @@ public class MessageService {
         }
 
         messageRepository.delete(message);
+    }
+
+    /**
+     * Update message delivery status.
+     * Transitions: SENDING -> SENT -> DELIVERED
+     *
+     * @param messageId Message ID to update
+     * @param status    New delivery status
+     */
+    @Transactional
+    public Message updateDeliveryStatus(Long messageId, DeliveryStatus status) {
+        Message message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new ResourceNotFoundException("Message not found"));
+
+        message.setDeliveryStatus(status);
+
+        // Set delivered_at timestamp when message is delivered
+        if (status == DeliveryStatus.DELIVERED && message.getDeliveredAt() == null) {
+            message.setDeliveredAt(LocalDateTime.now());
+        }
+
+        return messageRepository.save(message);
+    }
+
+    /**
+     * Get all undelivered messages for a user.
+     * Returns messages with status != DELIVERED in chronological order.
+     *
+     * @param userId User ID to get undelivered messages for
+     * @return List of undelivered messages
+     */
+    @Transactional(readOnly = true)
+    public List<Message> getUndeliveredMessages(Long userId) {
+        return messageRepository.findUndeliveredMessagesByRecipient(userId);
+    }
+
+    /**
+     * Find message by ID.
+     *
+     * @param messageId Message ID
+     * @return Message entity
+     */
+    @Transactional(readOnly = true)
+    public Message findById(Long messageId) {
+        return messageRepository.findById(messageId)
+                .orElseThrow(() -> new ResourceNotFoundException("Message not found"));
     }
 }
